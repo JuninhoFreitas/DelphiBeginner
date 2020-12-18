@@ -1,0 +1,198 @@
+object DM: TDM
+  OldCreateOrder = False
+  Left = 758
+  Top = 129
+  Height = 542
+  Width = 440
+  object Database: TIBDatabase
+    Connected = True
+    DatabaseName = 'localhost:D:\Gabriel\dados\teste.fdb'
+    Params.Strings = (
+      'user_name=INFOCAP'
+      'password=231458536')
+    LoginPrompt = False
+    DefaultTransaction = Transaction
+    Left = 24
+    Top = 32
+  end
+  object Transaction: TIBTransaction
+    Active = True
+    DefaultDatabase = Database
+    Params.Strings = (
+      'concurrency'
+      'nowait')
+    Left = 104
+    Top = 32
+  end
+  object DataInsert: TIBDataSet
+    Database = Database
+    Transaction = Transaction
+    AfterPost = DataInsertAfterPost
+    DeleteSQL.Strings = (
+      'delete from PRODUTOS'
+      'where'
+      '  DESCRICAO = :OLD_DESCRICAO and'
+      '  PRECO = :OLD_PRECO and'
+      '  QUANTIDADE = :OLD_QUANTIDADE and'
+      '  UNID_MEDIDA = :OLD_UNID_MEDIDA')
+    InsertSQL.Strings = (
+      'insert into PRODUTOS'
+      '  (DESCRICAO, PRECO, QUANTIDADE, UNID_MEDIDA)'
+      'values'
+      '  (:DESCRICAO, :PRECO, :QUANTIDADE, :UNID_MEDIDA)')
+    RefreshSQL.Strings = (
+      'Select '
+      '  ID,'
+      '  DESCRICAO,'
+      '  PRECO,'
+      '  QUANTIDADE,'
+      '  UNID_MEDIDA'
+      'from PRODUTOS '
+      'where'
+      '  DESCRICAO = :DESCRICAO and'
+      '  PRECO = :PRECO and'
+      '  QUANTIDADE = :QUANTIDADE and'
+      '  UNID_MEDIDA = :UNID_MEDIDA')
+    SelectSQL.Strings = (
+      'SELECT * FROM PRODUTOS'
+      '')
+    ModifySQL.Strings = (
+      'update PRODUTOS'
+      'set'
+      '  DESCRICAO = :DESCRICAO,'
+      '  PRECO = :PRECO,'
+      '  QUANTIDADE = :QUANTIDADE,'
+      '  UNID_MEDIDA = :UNID_MEDIDA'
+      'where'
+      '  DESCRICAO = :OLD_DESCRICAO and'
+      '  PRECO = :OLD_PRECO and'
+      '  QUANTIDADE = :OLD_QUANTIDADE and'
+      '  UNID_MEDIDA = :OLD_UNID_MEDIDA')
+    Active = True
+    Left = 24
+    Top = 104
+    object DataInsertDESCRICAO: TIBStringField
+      FieldName = 'DESCRICAO'
+      Origin = '"PRODUTOS"."DESCRICAO"'
+      Required = True
+      Size = 100
+    end
+    object DataInsertPRECO: TFloatField
+      FieldName = 'PRECO'
+      Origin = '"PRODUTOS"."PRECO"'
+    end
+    object DataInsertQUANTIDADE: TIntegerField
+      FieldName = 'QUANTIDADE'
+      Origin = '"PRODUTOS"."QUANTIDADE"'
+      Required = True
+    end
+    object DataInsertUNID_MEDIDA: TIBStringField
+      FieldName = 'UNID_MEDIDA'
+      Origin = '"PRODUTOS"."UNID_MEDIDA"'
+      Size = 5
+    end
+  end
+  object SourceInsert: TDataSource
+    DataSet = DataInsert
+    Left = 104
+    Top = 104
+  end
+  object SourceConsulta: TDataSource
+    DataSet = IBQuery1
+    Left = 96
+    Top = 232
+  end
+  object IBQuery1: TIBQuery
+    Database = Database
+    Transaction = Transaction
+    Left = 24
+    Top = 232
+  end
+  object DataUpdate: TIBDataSet
+    Database = Database
+    Transaction = Transaction
+    AfterPost = DataInsertAfterPost
+    DeleteSQL.Strings = (
+      'delete from PRODUTOS'
+      'where'
+      '  DESCRICAO = :OLD_DESCRICAO and'
+      '  ID = :OLD_ID and'
+      '  PRECO = :OLD_PRECO and'
+      '  QUANTIDADE = :OLD_QUANTIDADE and'
+      '  UNID_MEDIDA = :OLD_UNID_MEDIDA')
+    InsertSQL.Strings = (
+      'insert into PRODUTOS'
+      '  (DESCRICAO, PRECO, QUANTIDADE, UNID_MEDIDA)'
+      'values'
+      '  (:DESCRICAO, :PRECO, :QUANTIDADE, :UNID_MEDIDA)')
+    RefreshSQL.Strings = (
+      'Select '
+      '  ID,'
+      '  DESCRICAO,'
+      '  PRECO,'
+      '  QUANTIDADE,'
+      '  UNID_MEDIDA'
+      'from PRODUTOS '
+      'where'
+      '  DESCRICAO = :DESCRICAO and'
+      '  ID = :ID and'
+      '  PRECO = :PRECO and'
+      '  QUANTIDADE = :QUANTIDADE and'
+      '  UNID_MEDIDA = :UNID_MEDIDA')
+    SelectSQL.Strings = (
+      'SELECT * FROM PRODUTOS'
+      '')
+    ModifySQL.Strings = (
+      'update PRODUTOS'
+      'set'
+      '  DESCRICAO = :DESCRICAO,'
+      '  PRECO = :PRECO,'
+      '  QUANTIDADE = :QUANTIDADE,'
+      '  UNID_MEDIDA = :UNID_MEDIDA'
+      'where'
+      '  DESCRICAO = :OLD_DESCRICAO and'
+      '  PRECO = :OLD_PRECO and'
+      '  QUANTIDADE = :OLD_QUANTIDADE and'
+      '  UNID_MEDIDA = :OLD_UNID_MEDIDA')
+    Active = True
+    Left = 24
+    Top = 160
+    object DataUpdateID: TIntegerField
+      Alignment = taCenter
+      DisplayWidth = 3
+      FieldName = 'ID'
+      Origin = '"PRODUTOS"."ID"'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object IBStringField1: TIBStringField
+      DisplayWidth = 51
+      FieldName = 'DESCRICAO'
+      Origin = '"PRODUTOS"."DESCRICAO"'
+      Required = True
+      Size = 100
+    end
+    object FloatField1: TFloatField
+      DisplayWidth = 25
+      FieldName = 'PRECO'
+      Origin = '"PRODUTOS"."PRECO"'
+    end
+    object IntegerField1: TIntegerField
+      DisplayWidth = 8
+      FieldName = 'QUANTIDADE'
+      Origin = '"PRODUTOS"."QUANTIDADE"'
+      Required = True
+    end
+    object IBStringField2: TIBStringField
+      DisplayWidth = 15
+      FieldName = 'UNID_MEDIDA'
+      Origin = '"PRODUTOS"."UNID_MEDIDA"'
+      Size = 5
+    end
+  end
+  object SourceUpdate: TDataSource
+    DataSet = DataUpdate
+    Left = 104
+    Top = 160
+  end
+end
